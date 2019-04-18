@@ -72,7 +72,7 @@ const systemInfo = {};
     };
 })();
 
-window.__device = {
+window.__platform = {
     getSystemInfo () {
         return systemInfo;
     },
