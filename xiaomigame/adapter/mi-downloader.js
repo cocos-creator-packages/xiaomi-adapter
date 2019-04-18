@@ -45,28 +45,26 @@ var MiDownloader = window.MiDownloader = function () {
 MiDownloader.ID = ID;
 
 MiDownloader.prototype.init = function () {
-    if (!CC_WECHATGAMESUB) {
-        this.cacheDir = qg.env.USER_DATA_PATH + '/gamecaches';
-        this.cachedFileName = 'cacheList.json';
-        // whether or not cache asset into user's storage space
-        this.cacheAsset = true;
-        // cache one per cycle
-        this.cachePeriod = 100;
-        // whether or not storage space is run out of
-        this.outOfStorage = false;
+    this.cacheDir = qg.env.USER_DATA_PATH + '/gamecaches';
+    this.cachedFileName = 'cacheList.json';
+    // whether or not cache asset into user's storage space
+    this.cacheAsset = true;
+    // cache one per cycle
+    this.cachePeriod = 100;
+    // whether or not storage space is run out of
+    this.outOfStorage = false;
 
-        this.writeFilePeriod = 1000;
+    this.writeFilePeriod = 1000;
 
-        cacheQueue = {};
-        packageFiles = {};
+    cacheQueue = {};
+    packageFiles = {};
 
-        var cacheFilePath = this.cacheDir + '/' + this.cachedFileName;
-        cachedFiles = miFsUtils.readJsonSync(cacheFilePath);
-        if (cachedFiles instanceof Error) {
-            cachedFiles = {};
-            miFsUtils.makeDirSync(this.cacheDir, true);
-            miFsUtils.writeFileSync(cacheFilePath, JSON.stringify(cachedFiles), 'utf8');
-        }
+    var cacheFilePath = this.cacheDir + '/' + this.cachedFileName;
+    cachedFiles = miFsUtils.readJsonSync(cacheFilePath);
+    if (cachedFiles instanceof Error) {
+        cachedFiles = {};
+        miFsUtils.makeDirSync(this.cacheDir, true);
+        miFsUtils.writeFileSync(cacheFilePath, JSON.stringify(cachedFiles), 'utf8');
     }
 };
 
@@ -87,19 +85,6 @@ MiDownloader.prototype.handle = function (item, callback) {
                 return;
             }
         }
-    }
-
-    if (CC_WECHATGAMESUB) {
-        // if qg.getFileSystemManager is undefined, need to skip
-        if (REGEX.test(item.url)) {
-            return null;
-        }
-
-        item.url = this.SUBCONTEXT_ROOT + '/' + item.url;
-        if (miFsUtils.checkFsValid()) return null;
-
-        handleItem(item, callback);
-        return;
     }
 
     function seek (inPackage) {

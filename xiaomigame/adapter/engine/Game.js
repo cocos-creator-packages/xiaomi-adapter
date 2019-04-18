@@ -6,7 +6,7 @@ const game = cc.game;
 Object.assign(game, {
     setFrameRate (frameRate) {
         _frameRate = frameRate;
-        wx.setPreferredFramesPerSecond(frameRate);
+        qg.setPreferredFramesPerSecond(frameRate);
     },
 
     getFrameRate () {
@@ -94,10 +94,8 @@ Object.assign(game, {
             win.onfocus = onShown;
         }
 
-        if (CC_WECHATGAME && cc.sys.browserType !== cc.sys.BROWSER_TYPE_WECHAT_GAME_SUB) {
-            wx.onShow && wx.onShow(onShown);
-            wx.onHide && wx.onHide(onHidden);
-        }
+        qg.onShow && qg.onShow(onShown);
+        qg.onHide && qg.onHide(onHidden);
 
         if ("onpageshow" in window && "onpagehide" in window) {
             win.addEventListener("pagehide", onHidden);

@@ -1115,7 +1115,7 @@
 	  userAgent: 'Mozilla/5.0 (Linux; Android 7.0; Redmi Note 4X Build/NRD90M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 QuickGame Language/zh_CN',
 	  onLine: true, // TODO 用 qg.getNetworkStateChange 和 qg.onNetworkStateChange 来返回真实的状态
 
-	  // TODO 用 wx.getLocation 来封装 geolocation
+	  // TODO 用 qg.getLocation 来封装 geolocation
 	  geolocation: {
 	    getCurrentPosition: _util.noop,
 	    watchPosition: _util.noop,
