@@ -1,5 +1,5 @@
 cc.loader.downloader.loadSubpackage = function (name, completeCallback) {
-    wx.loadSubpackage({
+    qg.loadSubpackage({
         name: name,
         success: function () {
             if (completeCallback) completeCallback();
@@ -18,7 +18,7 @@ function downloadScript (item, callback, isAsync) {
 
 function loadFont (item) {
     var url = item.url;
-    var fontFamily = wx.loadFont(url);
+    var fontFamily = qg.loadFont(url);
     return fontFamily || 'Arial';
 }
 

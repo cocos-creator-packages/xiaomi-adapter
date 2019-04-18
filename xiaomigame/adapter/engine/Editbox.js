@@ -44,7 +44,7 @@
     };
 
     cc.EditBox.prototype._updateStayOnTop = function () {
-        // wx not support
+        // qg not support
     };
 
     _p.setFocus = function () {
@@ -73,9 +73,9 @@
         if (_currentEditBoxImpl !== this) {
             if (_currentEditBoxImpl) {
                 _currentEditBoxImpl._endEditing();
-                wx.offKeyboardConfirm(_currentEditBoxImpl.onKeyboardConfirmCallback);
-                wx.offKeyboardInput(_currentEditBoxImpl.onKeyboardInputCallback);
-                wx.offKeyboardComplete(_currentEditBoxImpl.onKeyboardCompleteCallback);
+                qg.offKeyboardConfirm(_currentEditBoxImpl.onKeyboardConfirmCallback);
+                qg.offKeyboardInput(_currentEditBoxImpl.onKeyboardInputCallback);
+                qg.offKeyboardComplete(_currentEditBoxImpl.onKeyboardCompleteCallback);
             }
             _currentEditBoxImpl = this;
         }
@@ -87,12 +87,12 @@
         function onKeyboardConfirmCallback (res) {
             editBoxImpl._text = res.value;
             editBoxImpl._delegate && editBoxImpl._delegate.editBoxEditingReturn && editBoxImpl._delegate.editBoxEditingReturn();
-            wx.hideKeyboard({
+            qg.hideKeyboard({
                 success: function (res) {
                     
                 },
                 fail: function (res) {
-                    cc.warn(res.errMsg);
+                    cc.warn(res);
                 }
             });
         }
@@ -112,29 +112,29 @@
 
         function onKeyboardCompleteCallback () {
             editBoxImpl._endEditing();
-            wx.offKeyboardConfirm(onKeyboardConfirmCallback);
-            wx.offKeyboardInput(onKeyboardInputCallback);
-            wx.offKeyboardComplete(onKeyboardCompleteCallback);
+            qg.offKeyboardConfirm(onKeyboardConfirmCallback);
+            qg.offKeyboardInput(onKeyboardInputCallback);
+            qg.offKeyboardComplete(onKeyboardCompleteCallback);
             _currentEditBoxImpl = null;
         }
         
-        wx.showKeyboard({
+        qg.showKeyboard({
             defaultValue: editBoxImpl._text,
             maxLength: editBoxImpl._maxLength,
             multiple: multiline,
-            confirmHold: false,  // hide keyboard mannually by wx.onKeyboardConfirm
+            confirmHold: true,  // ToFix: value false crush on XiaoMi
             confirmType: getKeyboardReturnType(editBoxImpl._returnType),
             success: function (res) {
                 editBoxImpl._delegate && editBoxImpl._delegate.editBoxEditingDidBegan && editBoxImpl._delegate.editBoxEditingDidBegan();
             },
             fail: function (res) {
-                cc.warn(res.errMsg);
+                cc.warn(res);
                 editBoxImpl._endEditing();
             }
         });
-        wx.onKeyboardConfirm(onKeyboardConfirmCallback);
-        wx.onKeyboardInput(onKeyboardInputCallback);
-        wx.onKeyboardComplete(onKeyboardCompleteCallback);
+        qg.onKeyboardConfirm(onKeyboardConfirmCallback);
+        qg.onKeyboardInput(onKeyboardInputCallback);
+        qg.onKeyboardComplete(onKeyboardCompleteCallback);
     };
 })();
 
