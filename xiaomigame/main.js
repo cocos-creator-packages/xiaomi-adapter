@@ -1,5 +1,5 @@
 require('adapter/mi-builtin.js');
-require('adapter/engine/Device.js');
+require('adapter/engine/Platform.js');
 require('adapter/mi-downloader.js');
 require('src/settings.js');
 var settings = window._CCSettings;

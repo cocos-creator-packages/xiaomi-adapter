@@ -22,8 +22,8 @@ Object.assign(_cc.inputManager, {
                 resCpy.z = res.z;
             
                 var gravityFactor = 10;
-                resCpy.x *= -gravityFactor;
-                resCpy.y *= -gravityFactor;
+                resCpy.x *= gravityFactor;
+                resCpy.y *= gravityFactor;
 
                 deviceMotionEvent.accelerationIncludingGravity = resCpy;
                 document.dispatchEvent(deviceMotionEvent);

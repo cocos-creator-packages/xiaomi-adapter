@@ -5,3 +5,4 @@ require('./DeviceMotionEvent');
 require('./InputManager');
 require('./Loader');
 require('./misc');
+require('./Texture');

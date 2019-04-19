@@ -22,6 +22,29 @@ Object.assign(Audio.prototype, {
         }
     },
 
+    play () {
+        // marked as playing so it will playOnLoad
+        this._state = Audio.State.PLAYING;
+
+        if (!this._element) {
+            return;
+        }
+
+        this._bindEnded();
+        this._element.play();
+    },
+
+    setCurrentTime (num) {
+        // TODO: To ensure innerAudioContext loaded
+        if (this._element) {
+            this._element.seek(num);
+        }
+    },
+
+    getState () {
+        return this._state;
+    },
+
     destroy () {
         this._element.destroy();
         this._element = null;
