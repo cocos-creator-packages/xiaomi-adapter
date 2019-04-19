@@ -1,10 +1,24 @@
 const inputManager = _cc.inputManager;
 
 Object.assign(inputManager, {
-    /**
-     * @method registerSystemEvent
-     * @param {HTMLElement} element
-     */
+    getHTMLElementPosition () {
+        return {
+            left: 0,
+            top: 0,
+            width: window.innerWidth,
+            height: window.innerHeight
+        };
+    },
+
+    getPointByEvent () {
+        if (event.pageX != null)  //not avalable in <= IE8
+            return {x: event.pageX, y: event.pageY};
+
+        pos.left = 0;
+        pos.top = 0;
+        return {x: event.clientX, y: event.clientY};
+    },
+
     registerSystemEvent (element) {
         if(this._isRegisterEvent) return;
 

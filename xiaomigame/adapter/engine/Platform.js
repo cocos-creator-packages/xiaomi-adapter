@@ -15,21 +15,7 @@ const systemInfo = {};
     systemInfo.language = env.language.substr(0, 2);
     systemInfo.languageCode = env.language.toLowerCase();
     var system = env.system.toLowerCase();
-    if (env.platform === "android") {
-        systemInfo.os = OS_ANDROID;
-    }
-    else if (env.platform === "ios") {
-        systemInfo.os = OS_IOS;
-    }
-    else if (env.platform === 'devtools') {
-        systemInfo.isMobile = false;
-        if (system.indexOf('android') > -1) {
-            systemInfo.os = OS_ANDROID;
-        }
-        else if (system.indexOf('ios') > -1) {
-            systemInfo.os = OS_IOS;
-        }
-    }
+    systemInfo.os = OS_ANDROID;
     // Adaptation to Android P
     if (system === 'android p') {
         system = 'android p 9.0';
@@ -64,7 +50,7 @@ const systemInfo = {};
         "opengl": !!_supportWebGL,
         "webp": _supportWebp
     };
-    systemInfo.__audioSupport = {
+    systemInfo.audioSupport = {
         ONLY_ONE: false,
         WEB_AUDIO: false,
         DELAY_CREATE_CTX: false,
