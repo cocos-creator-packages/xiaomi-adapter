@@ -7,9 +7,6 @@
         "server": "quickgame server",
         "debug": "quickgame debug"
     },
-    "dependencies": {
-        "quickgame-cli": "^0.1.10"
-    },
     "babel": {
         "plugins": [
             "babel-plugin-transform-remove-strict-mode"
