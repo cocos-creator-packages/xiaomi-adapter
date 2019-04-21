@@ -1,5 +1,8 @@
 {
   "name": "xiaomi-adapter",
   "version": "1.0.0",
-  "build-template": "xiaomigame"
+  "build-template": "xiaomigame",
+  "dependencies": {
+    "quickgame-cli": "^0.1.10"
+  }
 }
