@@ -1,5 +1,5 @@
 // check macro in CCSys.js
-const XIAOMI_GAME = 110;
+const XIAOMI_GAME = 111;
 const OS_ANDROID = 'Android';
 const OS_IOS = 'iOS';
 const BROWSER_TYPE_XIAOMI_GAME = 'xiaomigame';
