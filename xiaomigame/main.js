@@ -5,6 +5,9 @@ require('src/settings.js');
 var settings = window._CCSettings;
 require('boot.js');
 require(settings.debug ? 'cocos2d-js.js' : 'cocos2d-js-min.js');
+
+cc.macro.ENABLE_WEBGL_ANTIALIAS = true;
+
 require('adapter/engine/index.js');
 
 // Adjust devicePixelRatio
