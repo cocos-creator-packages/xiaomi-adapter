@@ -34,6 +34,14 @@ Object.assign(Audio.prototype, {
         this._element.play();
     },
 
+    stop () {
+        if (!this._element) return;
+        this._element.stop();
+        this._unbindEnded();
+        this.emit('stop');
+        this._state = Audio.State.STOPPED;
+    },
+
     setCurrentTime (num) {
         // TODO: To ensure innerAudioContext loaded
         if (this._element) {
