@@ -54,7 +54,9 @@ Object.assign(Audio.prototype, {
     },
 
     destroy () {
-        this._element.destroy();
-        this._element = null;
+        if (this._element) {
+            this._element.destroy();
+            this._element = null;
+        }
     },
 });
