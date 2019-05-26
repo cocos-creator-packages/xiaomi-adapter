@@ -227,7 +227,7 @@
 	var _window = window;
 
 	var _qg$getSystemInfoSync = qg.getSystemInfoSync(),
-	    devicePixelRatio = _qg$getSystemInfoSync.devicePixelRatio;
+	    devicePixelRatio = _qg$getSystemInfoSync.pixelRatio;
 
 	var innerWidth = exports.innerWidth = _window.innerWidth;
 	var innerHeight = exports.innerHeight = _window.innerHeight;
