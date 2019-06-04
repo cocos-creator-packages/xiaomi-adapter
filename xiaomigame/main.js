@@ -1,9 +1,8 @@
 require('adapter/mi-builtin.js');
-require('adapter/engine/preAdaptEngine/index.js');
+require('adapter/engine/globalAdapter/index.js');
 require('adapter/mi-downloader.js');
 require('src/settings.js');
 var settings = window._CCSettings;
-require('boot.js');
 require(settings.debug ? 'cocos2d-js.js' : 'cocos2d-js-min.js');
 require('adapter/engine/index.js');
 
@@ -88,15 +87,6 @@ miDownloader.init();
         // load scene
         cc.director.loadScene(launchScene, null,
             function () {
-                if (cc.sys.isBrowser) {
-                    // show canvas
-                    var canvas = document.getElementById('GameCanvas');
-                    canvas.style.visibility = '';
-                    var div = document.getElementById('GameDiv');
-                    if (div) {
-                        div.style.backgroundImage = '';
-                    }
-                }
                 cc.loader.onProgress = null;
                 console.log('Success to load scene: ' + launchScene);
             }
@@ -121,7 +111,7 @@ miDownloader.init();
         id: 'GameCanvas',
         scenes: settings.scenes,
         debugMode: settings.debug ? cc.debug.DebugMode.INFO : cc.debug.DebugMode.ERROR,
-        showFPS: !false && settings.debug,
+        showFPS: settings.debug,
         frameRate: 60,
         jsList: jsList,
         groupList: settings.groupList,
