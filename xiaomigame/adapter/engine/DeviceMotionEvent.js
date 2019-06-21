@@ -1,34 +1,54 @@
-function DeviceMotionEvent() {
-    this.type = 'devicemotion';
-    this.accelerationIncludingGravity = null;
-}
+const inputManager = _cc.inputManager;
+let isInit = false;
 
-var isInit = false;
-var registerFunc = _cc.inputManager._registerAccelerometerEvent.bind(_cc.inputManager);
-var unregisterFunc = _cc.inputManager._unregisterAccelerometerEvent.bind(_cc.inputManager);
+// NOTE: There is no LANDSCAPE_LEFT on Xiaomi platform
+// const LANDSCAPE_LEFT = -90;
+const LANDSCAPE_RIGHT = 90;
 
-Object.assign(_cc.inputManager, {
+// NOTE: the data in callback registered on onAccelerometerChange is 10 times than the standard data
+// Need to be scaled by 0.1
+const factor = -0.1;
+
+Object.assign(inputManager, {
+    setAccelerometerEnabled (isEnable) {
+        let scheduler = cc.director.getScheduler();
+        scheduler.enableForTarget(this);
+        if (isEnable) {
+            this._registerAccelerometerEvent();
+            scheduler.scheduleUpdate(this);
+        }
+        else {
+            this._unregisterAccelerometerEvent();
+            scheduler.unscheduleUpdate(this);
+        }
+    },
+
+    // No need to adapt
+    // setAccelerometerInterval (interval) {  },
+
     _registerAccelerometerEvent () {
-        // register engine AccelerationEventListener to get acceleration data from qg
-        registerFunc();
-    
+        this._accelCurTime = 0;   
         if (!isInit) {
             isInit = true;
-            qg.onAccelerometerChange && qg.onAccelerometerChange(function (res) {
-                var deviceMotionEvent = new DeviceMotionEvent();
-                var resCpy = {};
-                resCpy.x = res.x;
-                resCpy.y = res.y;
-                resCpy.z = res.z;
-            
-                var gravityFactor = 10;
-                resCpy.x *= gravityFactor;
-                resCpy.y *= gravityFactor;
+            let self = this;
+            self._acceleration = new cc.Acceleration();
 
-                deviceMotionEvent.accelerationIncludingGravity = resCpy;
-                document.dispatchEvent(deviceMotionEvent);
+            qg.onAccelerometerChange && qg.onAccelerometerChange(function (res) {
+                let x = res.x;
+                let y = res.y;
+                
+                if (window.orientation === LANDSCAPE_RIGHT) {
+                    let tmp = x;
+                    x = -y;
+                    y = tmp;
+                }
+                
+                self._acceleration.x = x * factor;
+                self._acceleration.y = y * factor;
+                self._acceleration.z = res.z;
             });
-        } else {
+        }
+        else {
             qg.startAccelerometer && qg.startAccelerometer({
                 fail (err) {
                     cc.error('register Accelerometer failed ! err: ' + err);
@@ -40,9 +60,7 @@ Object.assign(_cc.inputManager, {
     },
 
     _unregisterAccelerometerEvent () {
-        // unregister engine AccelerationEventListener
-        unregisterFunc();
-    
+        this._accelCurTime = 0;  
         qg.stopAccelerometer && qg.stopAccelerometer({
             fail (err) {
                 cc.error('unregister Accelerometer failed ! err: ' + err);
@@ -50,5 +68,5 @@ Object.assign(_cc.inputManager, {
             // success () { },
             // complete () { },
         });
-    },    
+    },
 });
